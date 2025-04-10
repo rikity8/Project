@@ -1,16 +1,36 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const mysql = require('mysql2');
+const loginRoute = require('./routes/login'); // Импортируем маршрут входа и регистрации
 
 const app = express();
-const registerRoute = require('./routes/register');
+const port = 3000;
 
+// Подключение к базе данных
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',  // Пустой пароль, если у тебя так
+  database: 'travel_db'
+});
+
+db.connect(err => {
+  if (err) {
+    console.error('Ошибка подключения к базе данных:', err);
+  } else {
+    console.log('Подключено к базе данных');
+  }
+});
+
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/api/register', registerRoute);
+// Подключаем маршруты для входа и регистрации
+app.use('/api', loginRoute);  // Теперь все запросы через /api/login и /api/register
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Сервер запущен на http://localhost:${PORT}`);
+// Стартуем сервер
+app.listen(port, () => {
+  console.log(`Сервер запущен на http://localhost:${port}`);
 });
