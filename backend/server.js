@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2');
-const loginRoute = require('./routes/login'); // Импортируем маршрут входа и регистрации
+const loginRoute = require('./routes/login'); 
 
 const app = express();
 const port = 3000;
@@ -11,7 +11,7 @@ const port = 3000;
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',  // Пустой пароль, если у тебя так
+  password: '1324',  
   database: 'travel_db'
 });
 
@@ -23,14 +23,13 @@ db.connect(err => {
   }
 });
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // Подключаем маршруты для входа и регистрации
-app.use('/api', loginRoute);  // Теперь все запросы через /api/login и /api/register
+app.use('/api', loginRoute);  // Запросы через /api/login и /api/register
 
-// Стартуем сервер
+// Старт сервера
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`);
 });

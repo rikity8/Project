@@ -1,11 +1,17 @@
 const express = require('express');
+
 const router = express.Router();
+
+// Импортируем модуль подключения к базе данных
 const db = require('../db');
 
+// Обработка  регистрации нового пользователя
 router.post('/', (req, res) => {
   const { name, email, phone, password } = req.body;
 
   const sql = 'INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)';
+
+  // Выполняем запрос к бд
   db.query(sql, [name, email, phone, password], (err) => {
     if (err) {
       console.error('Ошибка при добавлении пользователя:', err);
