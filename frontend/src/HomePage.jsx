@@ -9,7 +9,7 @@ import "./App.css";
 export default function HomePage() {
   const tours = [
     {
-      id: 4,
+      id: 1,
       title: "Романтическая Италия",
       description: "10 дней по самым красивым городам Италии",
       price: "₸ 350 000",
@@ -17,7 +17,7 @@ export default function HomePage() {
       fullDescription: "Тур включает посещение Рима, Венеции, Флоренции..."
     },
     {
-      id: 5,
+      id: 2,
       title: "Альпийская Швейцария",
       description: "8 дней в швейцарских Альпах",
       price: "₸ 400 000",
@@ -25,7 +25,7 @@ export default function HomePage() {
       fullDescription: "Экскурсии по Церматту, Интерлакену, Люцерну..."
     },
     {
-      id: 6,
+      id: 3,
       title: "Тропический Таиланд",
       description: "12 дней на лучших пляжах Таиланда",
       price: "₸ 320 000",
@@ -40,7 +40,7 @@ export default function HomePage() {
       <nav className="main-nav minimal">
         <div className="nav-links">
             <Link to="/tours">Туры</Link>
-            <Link to="/favorites">Избранное</Link> {/* Новая ссылка */}
+            <Link to="/favorites">Избранное</Link> 
             <Link to="/contacts">Контакты</Link>
             <Link to="/account">Аккаунт</Link>
         </div>
