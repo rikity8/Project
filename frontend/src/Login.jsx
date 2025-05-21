@@ -16,7 +16,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("Проверка...");
-
+  
     try {
       const res = await fetch("http://localhost:3000/api/login", {
         method: "POST",
@@ -25,13 +25,15 @@ export default function Login() {
         },
         body: JSON.stringify(loginData),
       });
-
+  
       const data = await res.json();
-      
-
+  
       if (data.success) {
+        // Сохраняем пользователя в sessionStorage
+        sessionStorage.setItem("userData", JSON.stringify(data.user));
+  
         setMessage("Успешный вход! Перенаправление...");
-        setTimeout(() => navigate("/"), 1500);
+        setTimeout(() => navigate("/account"), 1500); // ← теперь на /account
       } else {
         setMessage(data.error || "Ошибка входа");
       }
@@ -39,6 +41,7 @@ export default function Login() {
       setMessage("Сервер недоступен");
     }
   };
+  
 
   return (
     <div className="fullscreen-page">

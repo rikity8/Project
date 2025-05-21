@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Account from "./Account"; 
 import FavoritesPage from "./FavoritesPage";
+import ToursPage from "./ToursPage";
 import "./App.css";
 
 function App() {
@@ -14,13 +15,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<Account />} />
-        <Route path="/tours" element={<HomePage />} />
-        <Route path="/excursions" element={<HomePage />} />
-        <Route path="/transfer" element={<HomePage />} />
-        <Route path="/accommodation" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/tours" element={<ToursPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="/" element={<HomePage />} />
+        {/* Если нужно, позже добавишь другие страницы */}
       </Routes>
     </Router>
   );

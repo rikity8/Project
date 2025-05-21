@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 
 const loginRoute = require('./routes/login');
 const registerRoute = require('./routes/register'); 
-
+const accountRoute = require("./routes/account");
 const app = express();
 const port = 3000;
 
@@ -34,6 +34,7 @@ app.use(bodyParser.json());
 // Роуты
 app.use('/api/login', loginRoute);
 app.use('/api/register', registerRoute); 
+app.use("/api/account", accountRoute);
 
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`);

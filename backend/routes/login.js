@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const db = require('../db');
 
@@ -37,8 +38,16 @@ router.post('/', (req, res) => {
 
       console.log(`Пользователь ${email} успешно вошёл в систему`);
 
+      // Генерируем JWT токен
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.ACCESS_TOKEN_SECRET || 'your-secret-key',
+        { expiresIn: '1h' }
+      );
+
       res.json({
         success: true,
+        token: token,
         user: {
           id: user.id,
           name: user.name,
