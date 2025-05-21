@@ -85,8 +85,8 @@ export default function Account() {
           <Link to="/trips" className="action-btn">
             <FiBriefcase /> Мои поездки
           </Link>
-          <Link to="/wishlist" className="action-btn">
-            <FiHeart /> Список желаний
+          <Link to="/favorites" className="action-btn">
+            <FiHeart /> Избранное
           </Link>
 
           <button
