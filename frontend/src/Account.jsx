@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiMail, FiPhone, FiCalendar, FiEdit, FiBriefcase, FiHeart, FiLogOut, FiHome } from "react-icons/fi";
-import "./App.css";
+import {
+  FiUser, FiMail, FiPhone, FiEdit, FiBriefcase,
+  FiHeart, FiLogOut, FiHome, FiGithub
+} from "react-icons/fi";
+import "./Account.css";
 import backgroundImage from "./assets/travel-bg.jpg";
 
 export default function Account() {
   const navigate = useNavigate();
-  
+
   const user = {
     name: "Иван Иванов",
     email: "ivan@example.com",
@@ -19,28 +22,40 @@ export default function Account() {
   };
 
   const handleLogout = () => {
-    // Здесь должна быть логика выхода (очистка токена и т.д.)
-    console.log("Пользователь вышел из системы");
-    navigate("/login"); // Перенаправляем на страницу входа
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('userData');
+    navigate("/login");
+    alert("Вы успешно вышли из системы");
+  };
+
+  const handleGoHome = () => {
+    navigate("/");
   };
 
   return (
     <div className="account-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="account-overlay"></div>
-      
+
+      {/* Фиксированная кнопка в левом верхнем углу */}
+      <button
+        className="floating-home-btn"
+        onClick={handleGoHome}
+        aria-label="На главную"
+      >
+        <FiHome />
+      </button>
+
       <div className="account-container">
-        {/* Заголовок профиля */}
         <div className="profile-header">
           <div className="avatar">
             <FiUser size={24} />
           </div>
-          <div>
+          <div className="profile-info">
             <h2>{user.name}</h2>
             <p className="member-since">Участник с {user.memberSince}</p>
           </div>
         </div>
 
-        {/* Основная информация */}
         <div className="profile-section">
           <h3>Личная информация</h3>
           <div className="info-item">
@@ -53,7 +68,6 @@ export default function Account() {
           </div>
         </div>
 
-        {/* Предстоящие поездки */}
         <div className="profile-section">
           <h3>Предстоящие поездки</h3>
           {user.upcomingTrips.map(trip => (
@@ -64,17 +78,6 @@ export default function Account() {
           ))}
         </div>
 
-        {/* Любимые направления */}
-        <div className="profile-section">
-          <h3>Предпочтения</h3>
-          <div className="preferences">
-            {user.favoriteDestinations.map((dest, index) => (
-              <div key={index} className="preference-tag">{dest}</div>
-            ))}
-          </div>
-        </div>
-
-        {/* Действия */}
         <div className="actions-section">
           <Link to="/edit-profile" className="action-btn">
             <FiEdit /> Редактировать
@@ -85,15 +88,23 @@ export default function Account() {
           <Link to="/wishlist" className="action-btn">
             <FiHeart /> Список желаний
           </Link>
-          <button onClick={handleLogout} className="action-btn logout">
+
+          <button
+            onClick={handleLogout}
+            className="action-btn logout"
+            aria-label="Выйти из аккаунта"
+          >
             <FiLogOut /> Выйти
           </button>
         </div>
-
-        <Link to="/" className="back-home">
-          <FiHome /> На главную
-        </Link>
       </div>
+
+      {/* Футер */}
+      <footer className="footer">
+        <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer">
+          <FiGithub /> github.com/your-username
+        </a>
+      </footer>
     </div>
   );
 }
