@@ -1,57 +1,55 @@
 const express = require('express');
-const bcrypt = require('bcrypt'); // Подключаем bcrypt
+const bcrypt = require('bcrypt');
 const router = express.Router();
 const db = require('../db');
 
-// POST /api/login — проверка входа пользователя
-router.post('/login', (req, res) => {
+// POST /api/login — вход пользователя
+router.post('/', (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    console.warn('Попытка входа без email или пароля');
+    return res.status(400).json({ error: 'Email и пароль обязательны' });
+  }
 
   const sql = 'SELECT * FROM users WHERE email = ?';
 
   db.query(sql, [email], async (err, results) => {
     if (err) {
-      console.error('Ошибка при запросе:', err);
-      return res.status(500).json({ success: false, error: 'Ошибка сервера' });
+      console.error('Ошибка при выполнении SQL-запроса:', err);
+      return res.status(500).json({ error: 'Ошибка сервера при доступе к базе данных' });
     }
 
     if (results.length === 0) {
-      return res.json({ success: false, error: 'Неверный email или пароль' });
+      console.warn(`Попытка входа: пользователь с email ${email} не найден`);
+      return res.status(401).json({ error: 'Неверный email или пароль' });
     }
 
     const user = results[0];
 
-    // Сравниваем введённый пароль с хешированным
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    try {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (isPasswordValid) {
-      res.json({ success: true, user: { id: user.id, email: user.email } });
-    } else {
-      res.json({ success: false, error: 'Неверный email или пароль' });
-    }
-  });
-});
-
-// POST /api/register — для регистрации пользователя
-router.post('/register', (req, res) => {
-  const { email, password } = req.body;
-
-  // Хешируем пароль перед сохранением
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) {
-      console.error('Ошибка хеширования:', err);
-      return res.status(500).json({ success: false, error: 'Ошибка регистрации' });
-    }
-
-    const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
-    db.query(sql, [email, hashedPassword], (err, results) => {
-      if (err) {
-        console.error('Ошибка при добавлении пользователя:', err);
-        return res.status(500).json({ success: false, error: 'Ошибка регистрации' });
+      if (!isPasswordValid) {
+        console.warn(`Попытка входа: неверный пароль для пользователя ${email}`);
+        return res.status(401).json({ error: 'Неверный email или пароль' });
       }
 
-      res.json({ success: true, message: 'Регистрация прошла успешно!' });
-    });
+      console.log(`Пользователь ${email} успешно вошёл в систему`);
+
+      res.json({
+        success: true,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+        }
+      });
+    } catch (compareError) {
+      console.error('Ошибка при проверке пароля:', compareError);
+      return res.status(500).json({ error: 'Ошибка сервера при проверке пароля' });
+    }
   });
 });
 

@@ -99,6 +99,12 @@
     font-weight: 500;
   }
   
+  .message {
+    margin-top: 10px;
+    color: #00cc66;
+    font-weight: bold;
+  }
+  
   @media (max-width: 480px) {
     .auth-form {
       padding: 1.5rem;
