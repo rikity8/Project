@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import backgroundImage from "./assets/tour-bg.jpg";
-import "./App.css";
+import "./Register.css";
 
 export default function Register() {
   const [formData, setFormData] = useState({
