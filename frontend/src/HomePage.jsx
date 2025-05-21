@@ -39,11 +39,13 @@ export default function HomePage() {
       {/* Шапка */}
       <nav className="main-nav minimal">
         <div className="nav-links">
-          <Link to="/tours">Туры</Link>
-          <Link to="/contacts">Контакты</Link>
-          <Link to="/account">Аккаунт</Link>
+            <Link to="/tours">Туры</Link>
+            <Link to="/favorites">Избранное</Link> {/* Новая ссылка */}
+            <Link to="/contacts">Контакты</Link>
+            <Link to="/account">Аккаунт</Link>
         </div>
-      </nav>
+      </nav> 
+      
 
       {/* Главный баннер в стиле Dolomites */}
       <header className="hero-banner full-banner" style={{ backgroundImage: `url(${mainImage})` }}>

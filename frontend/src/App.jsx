@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./HomePage";
 import Login from "./Login";
 import Register from "./Register";
-import Account from "./Account"; // Новый компонент
+import Account from "./Account"; 
+import FavoritesPage from "./FavoritesPage";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/transfer" element={<HomePage />} />
         <Route path="/accommodation" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </Router>

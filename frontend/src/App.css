@@ -553,3 +553,141 @@ html, body, #root {
     grid-template-columns: 1fr;
   }
 }
+
+/* Стили для страницы избранного */
+.favorites-page {
+  padding: 100px 40px 60px;
+  background-color: #f9f9f9;
+  min-height: calc(100vh - 160px);
+}
+
+.favorites-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.favorites-header h1 {
+  font-size: 2.5rem;
+  color: #2a2a2a;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.favorites-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.favorite-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.favorite-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.favorite-card-image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.favorite-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  color: white;
+}
+
+.favorite-card-content {
+  padding: 20px;
+}
+
+.favorite-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #2a2a2a;
+}
+
+.favorite-card p {
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.favorite-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.favorite-card-price {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #2a5d67;
+}
+
+.remove-favorite {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.empty-favorites {
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: 60px 0;
+}
+
+.empty-favorites p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.explore-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2a5d67;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.explore-link:hover {
+  background-color: #1d4149;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .favorites-header h1 {
+    font-size: 2rem;
+  }
+}
