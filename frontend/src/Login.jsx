@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import backgroundImage from "./assets/login-bg.jpg";
-import "./App.css";
+import "./Login.css";
 
 export default function Login() {
   const [loginData, setLoginData] = useState({
