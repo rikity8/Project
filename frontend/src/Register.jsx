@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import backgroundImage from "./assets/tour-bg.jpg";
 import "./Register.css";
+
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ export default function Register() {
     });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("Отправка...");
@@ -31,10 +34,15 @@ export default function Register() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (res.ok) {
         setMessage("Регистрация успешна!");
         setFormData({ name: "", email: "", phone: "", password: "" });
+  
+        // Переход на главную через 1.5 секунды
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
       } else {
         const error = await res.json();
         setMessage(error.message || "Ошибка регистрации.");
@@ -43,7 +51,7 @@ export default function Register() {
       setMessage("Сервер недоступен.");
     }
   };
-
+  
   return (
     <div className="fullscreen-page">
       <div 
