@@ -75,6 +75,29 @@
   .details-button:hover {
     background: #1e4048;
   }
+  .add-favorite-btn {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 8px;
+    transition: background 0.3s;
+  }
+  
+  .add-favorite-btn:hover {
+    background-color: #c2185b;
+  }
+  
+  .tour-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
   
   /* Адаптивность */
   @media (max-width: 768px) {

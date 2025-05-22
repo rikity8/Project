@@ -1,27 +1,10 @@
 import { Link } from "react-router-dom";
 import { FaHeart, FaArrowRight } from "react-icons/fa";
+import { useFavorites } from "./FavoritesContext";
 import "./App.css";
 
 export default function FavoritesPage() {
-  // Пример данных - замените на реальные из состояния/хранилища
-  const favorites = [
-    {
-      id: 1,
-      title: "Горные вершины Аатая",
-      description: "7-дневный тур по самым живописным местам",
-      price: "₸ 250 000",
-      image: "url-to-image-1",
-      duration: "7 дней"
-    },
-    {
-      id: 2,
-      title: "Романтическая Италия", 
-      description: "10 дней по самым красивым городам Италии",
-      price: "₸ 350 000",
-      image: "url-to-image-2",
-      duration: "10 дней"
-    }
-  ];
+  const { favorites, removeFromFavorites } = useFavorites();
 
   return (
     <div className="favorites-page">
@@ -34,12 +17,12 @@ export default function FavoritesPage() {
         {favorites.length > 0 ? (
           favorites.map(tour => (
             <div key={tour.id} className="favorite-card">
-              <div 
-                className="favorite-card-image" 
+              <div
+                className="favorite-card-image"
                 style={{ backgroundImage: `url(${tour.image})` }}
               >
                 <div className="favorite-card-overlay">
-                  <span>{tour.duration}</span>
+                  <span>{tour.duration || "—"}</span>
                 </div>
               </div>
               <div className="favorite-card-content">
@@ -47,7 +30,10 @@ export default function FavoritesPage() {
                 <p>{tour.description}</p>
                 <div className="favorite-card-meta">
                   <span className="favorite-card-price">{tour.price}</span>
-                  <button className="remove-favorite">
+                  <button
+                    className="remove-favorite"
+                    onClick={() => removeFromFavorites(tour.id)}
+                  >
                     <FaHeart /> Удалить
                   </button>
                 </div>
