@@ -5,7 +5,6 @@ import Register from "./Register";
 import Account from "./Account";
 import FavoritesPage from "./FavoritesPage";
 import ToursPage from "./ToursPage"; 
-import { FavoritesProvider } from "./FavoritesContext";
 import "./App.css";
 
 function App() {

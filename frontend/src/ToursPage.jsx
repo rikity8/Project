@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { useFavorites } from "./FavoritesContext";
 import "./ToursPage.css";
 
 import tour1 from "./assets/tour1.jpg";
@@ -11,7 +11,8 @@ import tour5 from "./assets/tour5.jpg";
 import tour6 from "./assets/tour6.jpg";
 
 export default function ToursPage() {
-  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+  const [favorites, setFavorites] = useState([]);
+  const userId = 1; // Временно
 
   const tours = [
     { id: 1, title: "Романтическая Италия", description: "10 дней по самым красивым городам Италии.", price: "₸ 350 000", image: tour1 },
@@ -22,7 +23,38 @@ export default function ToursPage() {
     { id: 6, title: "Норвежские фьорды", description: "Экспедиция по северной Норвегии.", price: "₸ 450 000", image: tour6 }
   ];
 
-  const isFavorite = (id) => favorites.some(item => item.id === id);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/favorites/${userId}`)
+      .then(res => res.json())
+      .then(data => setFavorites(data))
+      .catch(err => console.error("Ошибка загрузки избранного:", err));
+  }, []);
+
+  const isFavorite = (id) => favorites.some(item => item.tour_id === id);
+
+  const handleFavoriteToggle = (tour) => {
+    if (isFavorite(tour.id)) {
+      fetch(`http://localhost:3000/api/favorites/${userId}/${tour.id}`, {
+        method: "DELETE"
+      }).then(() => {
+        setFavorites(favorites.filter(fav => fav.tour_id !== tour.id));
+      });
+    } else {
+      fetch("http://localhost:3000/api/favorites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId,
+          tour_id: tour.id,
+          title: tour.title,
+          description: tour.description,
+          price: tour.price,
+          image: tour.image
+        })
+      }).then(res => res.json())
+        .then(() => setFavorites([...favorites, { tour_id: tour.id, ...tour }]));
+    }
+  };
 
   return (
     <div className="tours-page">
@@ -39,11 +71,10 @@ export default function ToursPage() {
                 <Link to={`/tour/${tour.id}`} className="details-button">Подробнее</Link>
                 <button
                   className="add-favorite-btn"
-                  onClick={() =>
-                    isFavorite(tour.id) ? removeFromFavorites(tour.id) : addToFavorites(tour)
-                  }
+                  onClick={() => handleFavoriteToggle(tour)}
                 >
-                  {isFavorite(tour.id) ? <FaHeart /> : <FaRegHeart />} {isFavorite(tour.id) ? "Удалить" : "В избранное"}
+                  {isFavorite(tour.id) ? <FaHeart /> : <FaRegHeart />}
+                  {isFavorite(tour.id) ? "Удалить" : "В избранное"}
                 </button>
               </div>
             </div>

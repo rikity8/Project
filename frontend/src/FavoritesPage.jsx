@@ -1,10 +1,29 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaArrowRight } from "react-icons/fa";
-import { useFavorites } from "./FavoritesContext";
+
 import "./App.css";
 
 export default function FavoritesPage() {
-  const { favorites, removeFromFavorites } = useFavorites();
+  const [favorites, setFavorites] = useState([]);
+  const userId = 1; // Заменить на текущего пользователя
+
+  // Загрузка избранного с бэка
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/favorites/${userId}`)
+      .then(res => res.json())
+      .then(data => setFavorites(data))
+      .catch(err => console.error("Ошибка загрузки избранного:", err));
+  }, []);
+
+  // Удаление из избранного
+  const removeFromFavorites = (tourId) => {
+    fetch(`http://localhost:3000/api/favorites/${userId}/${tourId}`, {
+      method: "DELETE",
+    })
+      .then(() => setFavorites(favorites.filter(fav => fav.tour_id !== tourId)))
+      .catch(err => console.error("Ошибка удаления:", err));
+  };
 
   return (
     <div className="favorites-page">
@@ -16,7 +35,7 @@ export default function FavoritesPage() {
       <div className="favorites-grid">
         {favorites.length > 0 ? (
           favorites.map(tour => (
-            <div key={tour.id} className="favorite-card">
+            <div key={tour.tour_id} className="favorite-card">
               <div
                 className="favorite-card-image"
                 style={{ backgroundImage: `url(${tour.image})` }}
@@ -32,7 +51,7 @@ export default function FavoritesPage() {
                   <span className="favorite-card-price">{tour.price}</span>
                   <button
                     className="remove-favorite"
-                    onClick={() => removeFromFavorites(tour.id)}
+                    onClick={() => removeFromFavorites(tour.tour_id)}
                   >
                     <FaHeart /> Удалить
                   </button>
