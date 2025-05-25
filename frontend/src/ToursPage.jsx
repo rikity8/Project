@@ -12,7 +12,7 @@ import tour6 from "./assets/tour6.jpg";
 
 export default function ToursPage() {
   const [favorites, setFavorites] = useState([]);
-  const userId = 1; // Временно
+  const userId = 1; // временно
 
   const tours = [
     { id: 1, title: "Романтическая Италия", description: "10 дней по самым красивым городам Италии.", price: "₸ 350 000", image: tour1 },
@@ -51,7 +51,8 @@ export default function ToursPage() {
           price: tour.price,
           image: tour.image
         })
-      }).then(res => res.json())
+      })
+        .then(res => res.json())
         .then(() => setFavorites([...favorites, { tour_id: tour.id, ...tour }]));
     }
   };

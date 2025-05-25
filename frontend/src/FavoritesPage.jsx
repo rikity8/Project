@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaArrowRight } from "react-icons/fa";
-
 import "./App.css";
 
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
-  const userId = 1; // Заменить на текущего пользователя
+  const userId = 1; // заменить на авторизованного пользователя
 
-  // Загрузка избранного с бэка
+  // Загружаем избранные туры
   useEffect(() => {
     fetch(`http://localhost:3000/api/favorites/${userId}`)
       .then(res => res.json())
@@ -21,7 +20,7 @@ export default function FavoritesPage() {
     fetch(`http://localhost:3000/api/favorites/${userId}/${tourId}`, {
       method: "DELETE",
     })
-      .then(() => setFavorites(favorites.filter(fav => fav.tour_id !== tourId)))
+      .then(() => setFavorites(prev => prev.filter(fav => fav.tour_id !== tourId)))
       .catch(err => console.error("Ошибка удаления:", err));
   };
 
