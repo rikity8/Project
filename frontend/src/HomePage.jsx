@@ -4,7 +4,7 @@ import tour1 from "./assets/tour1.jpg"; // Италия
 import tour2 from "./assets/tour2.jpg"; // Швейцария
 import tour3 from "./assets/tour3.jpg"; // Таиланд
 import { Link } from "react-router-dom";
-import "./App.css";
+import "./HomePage.css";
 
 export default function HomePage() {
   const tours = [
