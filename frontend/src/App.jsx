@@ -5,6 +5,7 @@ import Register from "./Register";
 import Account from "./Account";
 import FavoritesPage from "./FavoritesPage";
 import ToursPage from "./ToursPage"; 
+import Tour from "./Tour";
 import "./App.css";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/tour/:id" element={<Tour />} /> {/* Вот здесь */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<Account />} />
