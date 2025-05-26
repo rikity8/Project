@@ -65,6 +65,7 @@
     "is-fullwidth-code-point": "^3.0.0",
     "is-promise": "^4.0.0",
     "is-property": "^1.0.2",
+    "jsonwebtoken": "^9.0.2",
     "long": "^5.3.1",
     "lru-cache": "^7.18.3",
     "lru.min": "^1.1.2",
@@ -142,6 +143,4 @@
   "devDependencies": {
     "nodemon": "^3.1.10"
   }
-  
 }
-
