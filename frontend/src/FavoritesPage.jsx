@@ -10,19 +10,16 @@ export default function FavoritesPage() {
   // Загружаем избранные туры
   useEffect(() => {
     fetch(`http://localhost:3000/api/favorites/${userId}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => setFavorites(data))
       .catch(err => console.error("Ошибка загрузки избранного:", err));
   }, []);
-
-  // Удаление из избранного
-  const removeFromFavorites = (tourId) => {
-    fetch(`http://localhost:3000/api/favorites/${userId}/${tourId}`, {
-      method: "DELETE",
-    })
-      .then(() => setFavorites(prev => prev.filter(fav => fav.tour_id !== tourId)))
-      .catch(err => console.error("Ошибка удаления:", err));
-  };
+  
 
   return (
     <div className="favorites-page">
