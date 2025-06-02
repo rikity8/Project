@@ -28,5 +28,5 @@
 - Аутентификация: JWT (`auth.js`)  
 
 ### Инструменты:  
-- Git, ESLint, Vite  
+- Git, Vite  
 
